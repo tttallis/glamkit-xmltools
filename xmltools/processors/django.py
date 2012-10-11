@@ -1,4 +1,5 @@
 from base import BaseProcessor
+import sys
 
 __all__ = ['DjangoSaver',]
 
@@ -49,4 +50,4 @@ class DjangoSaver(BaseProcessor):
 
         self.count += 1
         if self.count % 100 == 0:
-            print "processed %s items" % self.count
+            sys.stderr.write("processed %s items\n" % (self.count, self.model.__name__))
