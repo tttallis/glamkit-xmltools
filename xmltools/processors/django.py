@@ -50,4 +50,4 @@ class DjangoSaver(BaseProcessor):
 
         self.count += 1
         if self.count % 100 == 0:
-            sys.stderr.write("processed %s items\n" % (self.count, self.model.__name__))
+            sys.stderr.write("processed %s %s items\n" % (self.count, self.model.__name__))
