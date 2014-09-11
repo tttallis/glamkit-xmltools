@@ -34,7 +34,10 @@ def _fast_iter(context, callable_start, callable_end, *args, **kwargs):
         _iter_count += 1
         if _iter_count % 10000 == 0:
             sys.stderr.write("processing %s elements...\n" % _iter_count)
-    del context
+        # Work around bug #1185701 by bailing out after the end of the document root.
+        if elem.getparent() is None:
+            break
+            del context
     return _iter_count
 
 
@@ -45,6 +48,7 @@ def iter_elems(xml_file, callable_start, callable_end, encoding=None, *args, **k
         events.append('start')
     if callable_end is not None:
         events.append('end')
+    print events
     context = etree.iterparse(xml_file, events=events, encoding=encoding)
     return _fast_iter(context, callable_start, callable_end, *args, **kwargs)
 
